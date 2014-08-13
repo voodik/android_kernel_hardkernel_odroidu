@@ -873,7 +873,7 @@ static const struct hid_device_id mt_devices[] = {
 
     /* Focaltech System FT5926 Multitouch(Hardkernel 9" Touch Screen) */
     { .driver_data = MT_CLS_DEFAULT,
-    	HID_USB_DEVICE(USB_VENDOR_ID_FOCALTECH, 
+    	HID_USB_DEVICE(USB_VENDOR_ID_FOCALTECH,
     	    USB_DEVICE_ID_FOCALTECH_TOUCH) },
 
     /* Chalk-Elec (7" Openframe Touch Screen) */
@@ -881,19 +881,24 @@ static const struct hid_device_id mt_devices[] = {
         HID_USB_DEVICE(USB_VENDOR_ID_MICROCHIP,
             USB_DEVICE_ID_CHALK7) },
 
+    /* Chalk-Elec (7" Openframe Touch Screen fw 1.6) */
+    { .driver_data = MT_CLS_DEFAULT,
+        HID_USB_DEVICE(USB_VENDOR_ID_DWAV,
+            USB_DEVICE_ID_CHALK7_1_6) },
+
     /* Elitegroup Computer Systems */
     { .driver_data = MT_CLS_DEFAULT,
-    	HID_USB_DEVICE(USB_VENDOR_ID_ELITEGROUP, 
+    	HID_USB_DEVICE(USB_VENDOR_ID_ELITEGROUP,
     	    USB_DEVICE_ID_ELITEGROUP_TOUCH) },
 
     /* Nexio Co., Ltd */
     { .driver_data = MT_CLS_DEFAULT,
-    	HID_USB_DEVICE(USB_VENDOR_ID_NEXIO, 
+    	HID_USB_DEVICE(USB_VENDOR_ID_NEXIO,
     	    USB_DEVICE_ID_NEXIO_TOUCH) },
     { .driver_data = MT_CLS_DEFAULT,
-    	HID_USB_DEVICE(USB_VENDOR_ID_NEXIO, 
+    	HID_USB_DEVICE(USB_VENDOR_ID_NEXIO,
     	    USB_DEVICE_ID_NEXIO_42TOUCH) },
-    
+
 	/* 3M panels */
 	{ .driver_data = MT_CLS_3M,
 		HID_USB_DEVICE(USB_VENDOR_ID_3M,
