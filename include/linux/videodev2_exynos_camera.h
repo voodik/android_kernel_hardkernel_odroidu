@@ -670,7 +670,7 @@ enum v4l2_blur {
 
 #if 1
 #define V4L2_CID_CAMERA_SCENE_MODE		(V4L2_CID_PRIVATE_BASE+70)
-enum v4l2_scene_mode {
+enum v4l2_scene_mode_s {
 	SCENE_MODE_BASE,
 	SCENE_MODE_NONE,
 	SCENE_MODE_PORTRAIT,
