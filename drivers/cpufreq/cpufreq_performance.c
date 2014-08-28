@@ -61,7 +61,7 @@ static DECLARE_WORK(performance_down_work, cpu_down_work);
  	default:
  		break;
  	}
-
+	return 0;
 };
 
 #ifdef CONFIG_CPU_FREQ_GOV_PERFORMANCE_MODULE
