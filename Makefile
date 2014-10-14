@@ -192,8 +192,8 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc64/ \
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 export KBUILD_BUILDHOST := $(SUBARCH)
-ARCH		?= $(SUBARCH)
-CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
+ARCH		?= arm
+CROSS_COMPILE	?= ../../../prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -344,13 +344,13 @@ DEPMOD		= /sbin/depmod
 KALLSYMS	= scripts/kallsyms
 PERL		= perl
 CHECK		= sparse
-ARM_FLAGS       = -marm -march=armv7-a -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
+
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
-CFLAGS_MODULE   =  -DMODULE -mtune=cortex-a9 -march=armv7-a -mfpu=neon
+CFLAGS_MODULE   =
 AFLAGS_MODULE   =
 LDFLAGS_MODULE  =
-CFLAGS_KERNEL	= -mtune=cortex-a9 -march=armv7-a -mfpu=neon
+CFLAGS_KERNEL	=
 AFLAGS_KERNEL	=
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
@@ -367,10 +367,9 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
-		   -ffast-math \
 		   -Wno-format-security \
 		   -fno-delete-null-pointer-checks \
-		   $(ARM_FLAGS)
+		   -mtune=cortex-a9
 		   
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
@@ -565,6 +564,14 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os
 else
 KBUILD_CFLAGS	+= -O2
+endif
+
+ifdef CONFIG_CC_CHECK_WARNING_STRICTLY
+KBUILD_CFLAGS	+= -fdiagnostics-show-option -Werror \
+		   -Wno-error=unused-function \
+		   -Wno-error=unused-variable \
+		   -Wno-error=unused-value \
+		   -Wno-error=unused-label
 endif
 
 include $(srctree)/arch/$(SRCARCH)/Makefile
