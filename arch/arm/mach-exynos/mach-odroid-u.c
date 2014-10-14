@@ -960,6 +960,24 @@ static struct i2c_board_info i2c_devs2[] __initdata = {
 
 #endif  // #ifdef CONFIG_VIDEO_TVOUT
 
+#define      GPIO_I2C4_SDA   EXYNOS4_GPA0(199)
+#define      GPIO_I2C4_SCL   EXYNOS4_GPA0(200)
+
+static struct    i2c_gpio_platform_data    i2c4_gpio_platdata = {
+   .sda_pin = GPIO_I2C4_SDA,   // gpio number
+   .scl_pin = GPIO_I2C4_SCL,
+   .udelay  = 5,               // 100KHz
+   .sda_is_open_drain = 1,
+   .scl_is_open_drain = 1,
+   .scl_is_output_only = 0
+};
+
+static struct    platform_device    i2c4_gpio_device = {
+   .name    = "i2c-gpio",
+   .id     = 4,    // adepter number
+   .dev.platform_data = &i2c4_gpio_platdata,
+};
+
 static struct i2c_board_info i2c_devs4[] __initdata = {
 
 };
@@ -1085,6 +1103,7 @@ static struct platform_device *dwmci_emmc_devices[] __initdata = {
 static struct platform_device *smdk4x12_devices[] __initdata = {
 
 	&odroid_sysfs,
+	&i2c4_gpio_device,
 
 	/* Samsung Power Domain */
 	&exynos4_device_pd[PD_MFC],
@@ -1122,7 +1141,7 @@ static struct platform_device *smdk4x12_devices[] __initdata = {
 
 	&s3c_device_i2c0,
 	&s3c_device_i2c1,
-	&s3c_device_i2c4,
+	//&s3c_device_i2c4,
 	&s3c_device_i2c5,
 
 #ifdef CONFIG_ODROID_FAN
