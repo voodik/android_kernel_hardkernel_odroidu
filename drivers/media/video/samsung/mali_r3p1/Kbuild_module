@@ -38,7 +38,7 @@ MALI_PP_SCHEDULER_FORCE_NO_JOB_OVERLAP_BETWEEN_APPS ?= 0
 DEFINES := $(EXTRA_DEFINES)
 
 # Get path to driver source from Linux build system
-DRIVER_DIR=$(src)
+DRIVER_DIR=$(srctree)/$(src)
 
 # For customer releases the Linux Device Drivers will be provided as ARM proprietary and GPL releases:
 # The ARM proprietary product will only include the license/proprietary directory
