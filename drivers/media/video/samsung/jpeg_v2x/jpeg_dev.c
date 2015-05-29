@@ -104,8 +104,8 @@ static void jpeg_watchdog_worker(struct work_struct *work)
 	spin_unlock_irqrestore(&dev->slock, flags);
 }
 
-static int jpeg_dec_queue_setup(struct vb2_queue *vq, const struct v4l2_format *v4l_fmt, unsigned int *num_buffers,
-			    unsigned int *num_planes, unsigned int sizes[],
+static int jpeg_dec_queue_setup(struct vb2_queue *vq, unsigned int *num_buffers,
+			    unsigned int *num_planes, unsigned long sizes[],
 			    void *allocators[])
 {
 	struct jpeg_ctx *ctx = vb2_get_drv_priv(vq);
@@ -174,17 +174,18 @@ static void jpeg_dec_unlock(struct vb2_queue *vq)
 	mutex_unlock(&ctx->dev->lock);
 }
 
-static void jpeg_dec_stop_streaming(struct vb2_queue *q)
+static int jpeg_dec_stop_streaming(struct vb2_queue *q)
 {
 	struct jpeg_ctx *ctx = q->drv_priv;
 	struct jpeg_dev *dev = ctx->dev;
 
 	v4l2_m2m_get_next_job(dev->m2m_dev_dec, ctx->m2m_ctx);
 
+	return 0;
 }
 
-static int jpeg_enc_queue_setup(struct vb2_queue *vq, const struct v4l2_format *v4l_fmt, unsigned int *num_buffers,
-			    unsigned int *num_planes, unsigned int sizes[],
+static int jpeg_enc_queue_setup(struct vb2_queue *vq, unsigned int *num_buffers,
+			    unsigned int *num_planes, unsigned long sizes[],
 			    void *allocators[])
 {
 	struct jpeg_ctx *ctx = vb2_get_drv_priv(vq);
@@ -255,13 +256,14 @@ static void jpeg_enc_unlock(struct vb2_queue *vq)
 	mutex_unlock(&ctx->dev->lock);
 }
 
-static void jpeg_enc_stop_streaming(struct vb2_queue *q)
+static int jpeg_enc_stop_streaming(struct vb2_queue *q)
 {
 	struct jpeg_ctx *ctx = q->drv_priv;
 	struct jpeg_dev *dev = ctx->dev;
 
 	v4l2_m2m_get_next_job(dev->m2m_dev_enc, ctx->m2m_ctx);
 
+	return 0;
 }
 
 static struct vb2_ops jpeg_enc_vb2_qops = {
